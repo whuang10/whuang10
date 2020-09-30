@@ -1,4 +1,4 @@
-# Winnie Huang
+# Winnie Huang (with Liam Kronman and Matthew Hui)
 # SoftDev
 # K05 -- Teamwork, but Better This Time; Printing the name of a randomly-slected student from team (orpheus, rex, or endymion)
 # 2020-09-29
