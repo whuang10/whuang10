@@ -1,4 +1,3 @@
-
 Team Asinine - Winnie Huang, Renee Mui, Anya Zorin
 SoftDev
 K12 -- ...or The Only Constant is Change?: Basic jinja and templates
