@@ -1,0 +1,71 @@
+Chapter 2: Importing, Exporting, and Querying Data
+
+Vocabulary:
+
+SRV connection string - a specific format used to establish a connection between your application and a MongoDB instance. This is a type of URI (Uniform Resource Identifier) string
+
+Namespace - The concatenation of the database name and collection name is called a namespace.
+
+How does MongoDB store data?
+JSON (JavaScript Standard Object Notation)
+JSON format:
+start and end with curly braces {}
+separate each key and value with a colon :
+separate each key:value pair with a comma ,
+“keys” must be surrounded by quotation marks “” (in MongoDB, “keys” are called “fields”)
+pros include friendly, readable, and familiar
+cons include text-based, space-consuming, limited
+can be natively stored and retrieved in MongoDB
+human readable
+BSON (Binary JSON)
+bridges the gap between binary representation and JSON format
+optimized for speed, space, and flexibility
+high performance and general-purpose focus
+MongoDB stores data in BSON, internally and over the network
+machine readable
+
+Importing and Exporting Data
+Export:
+in BSON: 
+mongodump --uri “<Atlas Cluster URI>”
+in JSON: 
+mongoexport --uri “<Atlas Cluster URI>”
+	       --collection=<collection name>
+	       --out=<filename>.json
+ie. 	mongodump --uri "mongodb+srv://<your username>:<your 
+password>@<your cluster>.mongodb.net/sample_supplies"
+
+mongoexport --uri="mongodb+srv://<your username>:<your 
+password>@<your cluster>.mongodb.net/sample_supplies" 
+--collection=sales --out=sales.json
+Import:
+in BSON dump:
+mongorestore --uri “<Atlas Cluster URI>”
+		   --drop dump
+in JSON:
+mongoimport --uri “<Atlas Cluster URI>”
+		  --drop=<filename>.json
+ie.	mongorestore --uri "mongodb+srv://<your username>:<your 
+password>@<your cluster>.mongodb.net/sample_supplies"  
+--drop dump
+
+mongoimport --uri="mongodb+srv://<your username>:<your 
+password>@<your cluster>.mongodb.net/sample_supplies" 
+--drop sales.json
+
+Find Command:
+Connecting to the Atlas cluster:
+mongo "mongodb+srv://sandbox.f5yyj.mongodb.net/<dbname>" --username m001-student
+pointer - a direct address of the memory location
+cursor - a pointer to a result set of a query
+it - iterates through a cursor
+show dbs				//shows list of databases
+use sample_training		//opens db sample_training
+show collections		//shows list of collections in db
+db.zips.find({"state": "NY"})		//shows list of all documents
+							that match the query
+db.zips.find({"state": "NY"}).count()	//shows # of documents
+								that match the query
+db.zips.find({"state": "NY", "city": "ALBANY"}) //more queries
+db.zips.find({"state": "NY", "city": "ALBANY"}).pretty() 
+								//formats the documents
