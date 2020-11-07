@@ -1,3 +1,8 @@
+Team Owls: Winnie Huang, Erin Lee, Constance Chen
+SoftDev
+LJ00 -- Le Voyage de Learnination avec Mongo, Première Phase
+2020-10-29
+
 Chapter 2: Importing, Exporting, and Querying Data
 
 Vocabulary:
