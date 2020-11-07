@@ -1,3 +1,8 @@
+Team Late Risers: Winnie Huang, Madelyn Mao, Dean Carey
+SoftDev
+LJ01 -- Le Voyage de Learnination avec Mongo, Deuxième Phase
+2020-11-07
+
 Chapter 3: Creating and Manipulating Documents
 
 Inserting New Documents:
