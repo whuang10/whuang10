@@ -1,0 +1,75 @@
+Winnie Huang
+SoftDev
+LJ02: Le Voyage de Learnination avec Mongo, Troisième Phase
+2020-11-25
+
+Chapter 5: Indexing and Aggregation Pipeline
+
+Aggregation Framework:
+in its simplest form, it is another way to query data in MongoDB
+pipeline stages - order matters (arrays!)
+//MQL
+db.listingsAndReviews.find({ "amenities": "Wifi" },
+                           { "price": 1, "address": 1, "_id": 0 
+  }).pretty()
+//Aggregation
+db.listingsAndReviews.aggregate([
+                          { "$match": { "amenities": "Wifi" } },
+                          { "$project": { "price": 1,
+                                          "address": 1,
+                                          "_id": 0 }}]).pretty()
+
+Why Aggregation?
+allows user to compute/reshape data as opposed to filtering/updating data in MQL (beyond the capabilities of MQL)
+$group operator that takes the incoming stream of data, and siphons it into multiple distinct reservoirs
+{$group:
+	{
+		_id: <expression>, //Group By Expression
+		<field>: {<accumulator1>:<expression1>},
+... }}
+	ie. projects only the address field value for each document, then group all documents 
+into one document per address.country value, and count one for each document in 
+each group:
+	db.listingsAndReviews.aggregate([
+                      { "$project": { "address": 1, "_id": 0 }},
+                      { "$group": { "_id": "$address.country",
+                                    "count": { "$sum": 1 } } }
+                      ])
+non-filtering stages do not modify the original data; instead, they work with the data in the cursor
+
+Cursor Methods:
+not applied to the data stored in the database; applied to the result set stored in the cursor
+pretty()
+count()
+sort()
+db.zips.find().sort({“pop”:1, “city”:-1})
+1 for increasing (lowest to highest)
+-1 for decreasing (highest to lowest)
+limit()
+db.zips.find().sort({"pop": -1}).limit(1)
+controls the amount of results
+usually used WITH and AFTER sort()
+MongoDB automatically assumes that if both methods are used, sort() comes before limit(), regardless of of order the user puts them in
+
+Indexes:
+make queries even more efficient
+one of the most impactful ways to improve query performance
+in a database, it is a special data structure that stores a small portion of the collection’s data set in an easy to traverse form
+avoids sorting!
+single field index:
+db.trips.createIndex({“birth year”:1})
+compound index:
+db.trips.createIndex({“start station id”:1, “birth year”: 1}) //order matters
+
+Data Modeling:
+way to organize fields in a document to support your application performance and querying capabilities
+rule: data is stored in the way that it is used
+
+Upsert:
+everything in MQL that is used to locate a document in a collection can also be used to modify this document
+db.collection.updateOne({<query to locate>},{<update>})
+upsert is a hybrid of update and insert, and should only be used when needed
+db.collection.updateOne({<query>},{<update>},{“upsert”:true})
+ask: is {<update>} enough to create a new document? Will the document have the same or similar form to other documents in the collection?
+upsert is defaulted to false
+if upsert is true, update the matched document, if not insert a new document
