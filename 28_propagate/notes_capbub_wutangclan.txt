@@ -1,0 +1,31 @@
+Team Cereal :: Winnie Huang, Saqif Abedin
+SoftDev
+K28: Bubble Bubble Toil Trouble
+2021-05-13
+
+v1:
+- prediction: clicking on a word will result in a popup of the word
+- observation: the click did produce a popup of the word 
+- reads the td tag and creates an alert accordingly
+
+v2:
+- prediction: popups will occur one after another
+    - the full table will be displayed last because it is written last
+- observation: the first popup was the item, then the row, then the full table
+
+v3:
+- prediction: stopPropagation() stops the popups after one is produced
+    - only table will be shown
+- before uncommenting: first popup was the table, then the cell, then the row
+- after uncommenting: only the table popup is produced after stopPropagation() is called 
+    - when table.addEventListener is set to false, the table popup is produced last
+
+v4:
+- prediction: the order will not be impacted 
+    - event.stopPropagation() will ensure that only one popoup is produced
+- before uncommenting: the first popup is the table, then the row, then the item
+    - capturing instead of bubbling
+- after uncommenting: event.stopPropagation() prevented further popups from occuring after table
+    -  when addEventListener is set to true, the order of popups is table, row, item
+    - when addEventListener is set to false for all of them, the roder is reversed
+        - order of popups is item, row, table 
